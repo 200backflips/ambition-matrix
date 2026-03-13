@@ -56,17 +56,17 @@ const alunos: StudentPosition = new Map([
 const useStudents = create<StudentStore>((set) => ({
   studentsPositions: alunos,
   addStudent: (student) =>
-    set((state) => {
+    set(({ studentsPositions }) => {
       const key = `${student.knowledge ?? 0}-${student.ambition ?? 0}`;
-      const position = state.studentsPositions.get(key);
+      const position = studentsPositions.get(key);
 
       if (position) {
         position.push(student);
       } else {
-        state.studentsPositions.set(key, [student]);
+        studentsPositions.set(key, [student]);
       }
       return {
-        studentsPositions: state.studentsPositions,
+        studentsPositions,
       };
     }),
 }));
