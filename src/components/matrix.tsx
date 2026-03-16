@@ -37,6 +37,18 @@ export default function Matrix() {
       <section className="relative grid grid-cols-10 grid-rows-10 gap-4">
         <div className="absolute w-0.25 h-full border-l border-dashed border-black/30 left-[50%]" />
         <div className="absolute h-0.25 w-full border-b border-dashed border-black/30 bottom-[50%]" />
+        <h4 className="absolute text-teal-900 bottom-[48.5%] -left-36">
+          Vaddå "variabel"??
+        </h4>
+        <h4 className="absolute text-teal-900 -top-6 left-[35%]">
+          Jagar kunskap och växer ständigt
+        </h4>
+        <h4 className="absolute text-teal-900 bottom-[48.5%] -right-52">
+          Imponerande kunskapsnivå
+        </h4>
+        <h4 className="absolute text-teal-900 -bottom-6 left-[35%]">
+          Kollar hellre på reels
+        </h4>
         {Array.from(studentsPositions).map(([key, students]) => {
           const [ambition, knowledge] = key.split("-").map(Number);
 
