@@ -20,7 +20,6 @@ import { TrashIcon } from "lucide-react";
 import { Separator } from "./ui/separator";
 import useStudents, { type Student } from "#/hooks/students";
 import { Badge } from "./ui/badge";
-import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -36,7 +35,10 @@ const formSchema = z.object({
     .number()
     .min(1)
     .max(10, "Ambitionsnivån måste vara mellan 1 och 10."),
+  createdAt: z.coerce.number(),
 });
+
+const timestampNow = Date.now();
 
 interface Props {
   children: React.ReactNode;
@@ -45,17 +47,13 @@ interface Props {
 export default function EditStudents({ children }: Props) {
   const title = "Lägg till studerande";
   const { studentsPositions, addStudent, removeStudent } = useStudents();
-  const [prevStudents, setPrevStudents] = useState(
-    Array.from(studentsPositions.values()).flat(),
-  );
-  const prevStudentCount = useRef(prevStudents.length ?? 0);
-  const [newlyAddedStudents, setNewlyAddedStudents] = useState<Student[]>([]);
 
   const getDefaultValues = () => ({
     id: crypto.randomUUID(),
     name: "",
     knowledge: "" as unknown as number,
     ambition: "" as unknown as number,
+    createdAt: "" as unknown as number,
   });
 
   const form = useForm({
@@ -64,14 +62,13 @@ export default function EditStudents({ children }: Props) {
   });
 
   function onSubmit(data: Student) {
-    const newStudent = {
+    addStudent({
       id: data.id,
       name: data.name,
       ambition: Number(data.ambition),
       knowledge: Number(data.knowledge),
-    };
-    addStudent(newStudent);
-    setNewlyAddedStudents([...newlyAddedStudents, newStudent]);
+      createdAt: Date.now(),
+    });
     form.reset(getDefaultValues);
   }
 
@@ -157,47 +154,46 @@ export default function EditStudents({ children }: Props) {
           <Separator />
           <h4>Tillagda studerande</h4>
           <div className="flex flex-wrap gap-2">
-            {[...prevStudents, ...newlyAddedStudents].map((student, index) => (
-              <motion.div
-                key={student.id}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.2,
-                  ease: [0, 0.71, 0.2, 1.01],
-                }}
-              >
-                <button
-                  type="button"
-                  className="relative group"
-                  onClick={() => {
-                    setPrevStudents(
-                      prevStudents.filter((s) => s.id !== student.id),
-                    );
-                    setNewlyAddedStudents(
-                      newlyAddedStudents.filter((s) => s.id !== student.id),
-                    );
-                    removeStudent({
-                      score: `${student.knowledge}-${student.ambition}`,
-                      id: student.id,
-                    });
+            {Array.from(studentsPositions.values())
+              .flat()
+              .sort((a, b) => a.createdAt - b.createdAt)
+              .map((student) => (
+                <motion.div
+                  key={student.id}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.2,
+                    ease: [0, 0.71, 0.2, 1.01],
                   }}
                 >
-                  <span className="absolute right-0 bottom-3 bg-destructive rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-all">
-                    <TrashIcon className="size-3 text-white" />
-                  </span>
-                  <Badge
-                    variant={
-                      index < prevStudentCount.current ? "aluna" : "peaceful"
-                    }
-                    className="group-hover:bg-destructive"
+                  <button
+                    type="button"
+                    className="relative group"
+                    onClick={() => {
+                      removeStudent({
+                        score: `${student.knowledge}-${student.ambition}`,
+                        id: student.id,
+                      });
+                    }}
                   >
-                    {student.name}
-                  </Badge>
-                </button>
-              </motion.div>
-            ))}
+                    <span className="absolute right-0 bottom-3 bg-destructive rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-all">
+                      <TrashIcon className="size-3 text-white" />
+                    </span>
+                    <Badge
+                      variant={
+                        student.createdAt > timestampNow - 1000
+                          ? "peaceful"
+                          : "aluna"
+                      }
+                      className="group-hover:bg-destructive"
+                    >
+                      {student.name}
+                    </Badge>
+                  </button>
+                </motion.div>
+              ))}
           </div>
           <DialogFooter>
             <Button

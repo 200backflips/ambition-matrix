@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import useStudents from "#/hooks/students";
-import { Badge } from "./ui/badge";
+// import { Badge } from "./ui/badge";
 import { cn } from "#/lib/utils";
 import {
   Tooltip,

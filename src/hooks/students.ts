@@ -5,6 +5,7 @@ export interface Student {
   name: string;
   ambition: number;
   knowledge: number;
+  createdAt: number;
 }
 
 type StudentPosition = Map<string, Student[]>;
@@ -24,18 +25,21 @@ const alunos: StudentPosition = new Map([
         name: "Bongbong Marcos",
         ambition: 10,
         knowledge: 10,
+        createdAt: 1773771957402,
       },
       {
         id: crypto.randomUUID(),
         name: "Windin",
         ambition: 10,
         knowledge: 10,
+        createdAt: 1773771957402,
       },
       {
         id: crypto.randomUUID(),
         name: "Curious Boy",
         ambition: 10,
         knowledge: 10,
+        createdAt: 1773771957402,
       },
     ],
   ],
@@ -47,6 +51,14 @@ const alunos: StudentPosition = new Map([
         name: "Daijin",
         ambition: 5,
         knowledge: 10,
+        createdAt: 1773771957402,
+      },
+      {
+        id: crypto.randomUUID(),
+        name: "Dindin",
+        ambition: 5,
+        knowledge: 4,
+        createdAt: 1773771957402,
       },
     ],
   ],
@@ -58,6 +70,7 @@ const alunos: StudentPosition = new Map([
         name: "Dindin",
         ambition: 5,
         knowledge: 4,
+        createdAt: 1773771957402,
       },
     ],
   ],
