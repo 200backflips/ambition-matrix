@@ -1,4 +1,5 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 import "../styles.css";
 import { Toaster } from "sonner";
@@ -18,9 +19,9 @@ function NotFoundComponent() {
 
 function RootComponent() {
   return (
-    <>
+    <TooltipProvider>
       <Toaster position="bottom-center" />
       <Outlet />
-    </>
+    </TooltipProvider>
   );
 }
