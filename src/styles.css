@@ -208,7 +208,7 @@ body,
     @apply font-sans;
   }
   h1 {
-    font-size: var(--text-4xl);
+    font-size: var(--text-5xl);
     font-weight: 700;
   }
   h2 {
