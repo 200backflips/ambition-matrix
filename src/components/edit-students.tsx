@@ -27,14 +27,14 @@ import * as z from "zod";
 const formSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Namnet måste vara minst 1 tecken långt."),
-  knowledge: z.coerce
-    .number()
-    .min(1)
-    .max(10, "Kunskapsnivån måste vara mellan 1 och 10."),
   ambition: z.coerce
     .number()
     .min(1)
     .max(10, "Ambitionsnivån måste vara mellan 1 och 10."),
+  knowledge: z.coerce
+    .number()
+    .min(1)
+    .max(10, "Kunskapsnivån måste vara mellan 1 och 10."),
   createdAt: z.coerce.number(),
 });
 
@@ -107,28 +107,6 @@ export default function EditStudents({ children }: Props) {
               )}
             />
             <Controller
-              name="knowledge"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-student-knowledge">
-                    Kunskap
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id="form-student-knowledge"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="Ange kunskapsnivå (1-10)"
-                    autoComplete="off"
-                    value={field.value as unknown as number}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
               name="ambition"
               control={form.control}
               render={({ field, fieldState }) => (
@@ -141,6 +119,28 @@ export default function EditStudents({ children }: Props) {
                     id="form-student-ambition"
                     aria-invalid={fieldState.invalid}
                     placeholder="Ange ambitionsnivå (1-10)"
+                    autoComplete="off"
+                    value={field.value as unknown as number}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="knowledge"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-student-knowledge">
+                    Kunskap
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-student-knowledge"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Ange kunskapsnivå (1-10)"
                     autoComplete="off"
                     value={field.value as unknown as number}
                   />

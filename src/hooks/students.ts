@@ -8,76 +8,20 @@ export interface Student {
   createdAt: number;
 }
 
-type StudentPosition = Map<string, Student[]>;
+type StudentPositions = Map<string, Student[]>;
 
 interface StudentStore {
-  studentsPositions: StudentPosition;
+  studentsPositions: StudentPositions;
   addStudent: (student: Student) => void;
   removeStudent: ({ score, id }: { score: string; id: string }) => void;
 }
 
-const alunos: StudentPosition = new Map([
-  [
-    "10-10",
-    [
-      {
-        id: crypto.randomUUID(),
-        name: "Bongbong Marcos",
-        ambition: 10,
-        knowledge: 10,
-        createdAt: 1773771957402,
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Windin",
-        ambition: 10,
-        knowledge: 10,
-        createdAt: 1773771957402,
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Curious Boy",
-        ambition: 10,
-        knowledge: 10,
-        createdAt: 1773771957402,
-      },
-    ],
-  ],
-  [
-    "5-10",
-    [
-      {
-        id: crypto.randomUUID(),
-        name: "Daijin",
-        ambition: 5,
-        knowledge: 10,
-        createdAt: 1773771957402,
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Dindin",
-        ambition: 5,
-        knowledge: 4,
-        createdAt: 1773771957402,
-      },
-    ],
-  ],
-  [
-    "5-4",
-    [
-      {
-        id: crypto.randomUUID(),
-        name: "Dindin",
-        ambition: 5,
-        knowledge: 4,
-        createdAt: 1773771957402,
-      },
-    ],
-  ],
-]);
+const storedPositions: StudentPositions = new Map(
+  JSON.parse(localStorage.getItem("studentsPositions") || "[]"),
+);
 
 const useStudents = create<StudentStore>((set) => ({
-  studentsPositions: alunos,
+  studentsPositions: storedPositions,
   addStudent: (student) =>
     set(({ studentsPositions }) => {
       const key = `${student.ambition ?? 0}-${student.knowledge ?? 0}`;
@@ -88,6 +32,10 @@ const useStudents = create<StudentStore>((set) => ({
       } else {
         studentsPositions.set(key, [student]);
       }
+      localStorage.setItem(
+        "studentsPositions",
+        JSON.stringify(Array.from(studentsPositions.entries())),
+      );
       return {
         studentsPositions,
       };
