@@ -27,7 +27,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function AddStudents({ children }: Props) {
+export default function EditStudents({ children }: Props) {
   const title = "Lägg till studerande";
   const { studentsPositions, addStudent, removeStudent } = useStudents();
   const [prevStudents, setPrevStudents] = useState(
