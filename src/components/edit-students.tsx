@@ -22,6 +22,21 @@ import useStudents, { type Student } from "#/hooks/students";
 import { Badge } from "./ui/badge";
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const formSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, "Namnet måste vara minst 1 tecken långt."),
+  knowledge: z.coerce
+    .number()
+    .min(1)
+    .max(10, "Kunskapsnivån måste vara mellan 1 och 10."),
+  ambition: z.coerce
+    .number()
+    .min(1)
+    .max(10, "Ambitionsnivån måste vara mellan 1 och 10."),
+});
 
 interface Props {
   children: React.ReactNode;
@@ -39,11 +54,12 @@ export default function EditStudents({ children }: Props) {
   const getDefaultValues = () => ({
     id: crypto.randomUUID(),
     name: "",
-    knowledge: 1,
-    ambition: 1,
+    knowledge: "" as unknown as number,
+    ambition: "" as unknown as number,
   });
 
   const form = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: getDefaultValues(),
   });
 
@@ -107,7 +123,7 @@ export default function EditStudents({ children }: Props) {
                     aria-invalid={fieldState.invalid}
                     placeholder="Ange kunskapsnivå (1-10)"
                     autoComplete="off"
-                    value={field.value || undefined}
+                    value={field.value as unknown as number}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -129,7 +145,7 @@ export default function EditStudents({ children }: Props) {
                     aria-invalid={fieldState.invalid}
                     placeholder="Ange ambitionsnivå (1-10)"
                     autoComplete="off"
-                    value={field.value || undefined}
+                    value={field.value as unknown as number}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -184,7 +200,13 @@ export default function EditStudents({ children }: Props) {
             ))}
           </div>
           <DialogFooter>
-            <Button variant="aluna">Lägg till studerande</Button>
+            <Button
+              variant="aluna"
+              form="form-student"
+              disabled={form.formState.isSubmitting}
+            >
+              Lägg till studerande
+            </Button>
             <DialogTrigger asChild>
               <Button type="button" variant="outline">
                 Stäng
