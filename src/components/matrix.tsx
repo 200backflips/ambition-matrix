@@ -33,56 +33,56 @@ export default function Matrix() {
   const { studentsPositions } = useStudents();
 
   return (
-    <main className="flex-1 flex items-center justify-center hsp">
-      <section className="relative grid grid-cols-10 grid-rows-10 gap-4">
-        <div className="absolute w-0.25 h-full border-l border-dashed border-black/30 left-[50%]" />
-        <div className="absolute h-0.25 w-full border-b border-dashed border-black/30 bottom-[50%]" />
-        <h4 className="absolute text-teal-900 bottom-[48.5%] -left-36">
-          Vaddå "variabel"??
-        </h4>
-        <h4 className="absolute text-teal-900 -top-6 left-[35%]">
-          Jagar kunskap och växer ständigt
-        </h4>
-        <h4 className="absolute text-teal-900 bottom-[48.5%] -right-52">
-          Imponerande kunskapsnivå
-        </h4>
-        <h4 className="absolute text-teal-900 -bottom-6 left-[35%]">
-          Kollar hellre på reels
-        </h4>
-        {Array.from(studentsPositions).map(([key, students]) => {
-          const [ambition, knowledge] = key.split("-").map(Number);
+    <div className="flex flex-col gap-2">
+      <h4 className="flex-1 text-teal-900 text-center">
+        Jagar kunskap och växer ständigt
+      </h4>
+      <div className="flex items-center gap-2">
+        <h4 className="flex-1 text-teal-900 text-right">Vad då "variabel"??</h4>
+        <main className="flex items-center justify-center hsp">
+          <section className="relative grid grid-cols-10 grid-rows-10 gap-4">
+            <div className="absolute w-0.25 h-full border-l border-dashed border-black/30 left-[50%]" />
+            <div className="absolute h-0.25 w-full border-b border-dashed border-black/30 bottom-[50%]" />
+            {Array.from(studentsPositions).map(([key, students]) => {
+              const [ambition, knowledge] = key.split("-").map(Number);
 
-          return (
-            <motion.div
-              key={key}
-              className="relative flex items-center aspect-square"
-              style={{
-                gridRowStart: -ambition,
-                gridColumnStart: knowledge,
-              }}
-              initial="stackedInitial"
-              animate="stacked"
-              whileHover={students.length > 1 ? "spread" : "stacked"}
-            >
-              {students
-                .sort((a, b) => a.name.length - b.name.length)
-                .map((student, index) => (
-                  <motion.span
-                    key={student.id}
-                    custom={index}
-                    variants={animationVariants}
-                    transition={{ type: "tween", duration: 0.2 }}
-                    className={cn("mx-auto", {
-                      absolute: index > 0,
-                    })}
-                  >
-                    <Badge variant="aluna">{student.name}</Badge>
-                  </motion.span>
-                ))}
-            </motion.div>
-          );
-        })}
-      </section>
-    </main>
+              return (
+                <motion.div
+                  key={key}
+                  className="relative max-w-16 flex items-center aspect-square"
+                  style={{
+                    gridRowStart: -(ambition + 1),
+                    gridColumnStart: knowledge,
+                  }}
+                  initial="stackedInitial"
+                  animate="stacked"
+                  whileHover={students.length > 1 ? "spread" : "stacked"}
+                >
+                  {students
+                    .sort((a, b) => a.name.length - b.name.length)
+                    .map((student, index) => (
+                      <motion.span
+                        key={student.id}
+                        custom={index}
+                        variants={animationVariants}
+                        transition={{ type: "tween", duration: 0.2 }}
+                        className={cn("mx-auto", {
+                          absolute: index > 0,
+                        })}
+                      >
+                        <Badge variant="aluna">{student.name}</Badge>
+                      </motion.span>
+                    ))}
+                </motion.div>
+              );
+            })}
+          </section>
+        </main>
+        <h4 className="flex-1 text-teal-900">Imponerande kunskapsnivå</h4>
+      </div>
+      <h4 className="flex-1 text-teal-900 text-center">
+        Kollar hellre på reels
+      </h4>
+    </div>
   );
 }
