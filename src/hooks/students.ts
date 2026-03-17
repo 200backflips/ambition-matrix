@@ -74,7 +74,6 @@ const useStudents = create<StudentStore>((set) => ({
         position.push(student);
       } else {
         studentsPositions.set(key, [student]);
-        console.log({ studentsPositions });
       }
       return {
         studentsPositions,
