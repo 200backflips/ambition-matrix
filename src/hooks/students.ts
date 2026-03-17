@@ -32,6 +32,7 @@ const useStudents = create<StudentStore>((set) => ({
       } else {
         studentsPositions.set(key, [student]);
       }
+
       localStorage.setItem(
         "studentsPositions",
         JSON.stringify(Array.from(studentsPositions.entries())),
@@ -50,6 +51,11 @@ const useStudents = create<StudentStore>((set) => ({
       studentsPositions.set(
         score,
         position?.filter((student) => student.id !== id),
+      );
+
+      localStorage.setItem(
+        "studentsPositions",
+        JSON.stringify(Array.from(studentsPositions.entries())),
       );
       return {
         studentsPositions,

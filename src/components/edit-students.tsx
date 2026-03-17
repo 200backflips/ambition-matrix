@@ -173,7 +173,7 @@ export default function EditStudents({ children }: Props) {
                     className="relative group"
                     onClick={() => {
                       removeStudent({
-                        score: `${student.knowledge}-${student.ambition}`,
+                        score: `${student.ambition}-${student.knowledge}`,
                         id: student.id,
                       });
                     }}
