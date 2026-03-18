@@ -1,6 +1,5 @@
 import DarkMatrix from "#/components/dark-matrix";
 import EditStudents from "#/components/edit-students";
-import Matrix from "#/components/matrix";
 import { Button } from "#/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { MoonIcon, SunIcon, UserCogIcon } from "lucide-react";
