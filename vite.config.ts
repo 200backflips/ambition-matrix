@@ -15,7 +15,7 @@ const config = defineConfig({
     tanstackRouter({ target: "react", autoCodeSplitting: true }),
     viteReact(),
   ],
-  base: "/ambition-matrix",
+  base: "/ambition-matrix/",
 });
 
 export default config;
