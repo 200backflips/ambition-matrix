@@ -2,9 +2,12 @@ import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
 export function getRouter() {
+  const routerBasepath = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+
   const router = createTanStackRouter({
     routeTree,
 
+    basepath: routerBasepath,
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
