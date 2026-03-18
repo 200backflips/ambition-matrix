@@ -41,10 +41,11 @@ const formSchema = z.object({
 const timestampNow = Date.now();
 
 interface Props {
-  children: React.ReactNode;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export default function EditStudents({ children }: Props) {
+export default function EditStudents({ open, onOpenChange }: Props) {
   const title = "Lägg till studerande";
   const { studentsPositions, addStudent, removeStudent } = useStudents();
 
@@ -73,8 +74,7 @@ export default function EditStudents({ children }: Props) {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogDescription className="sr-only">{title}</DialogDescription>
       <DialogContent>
         <DialogHeader>

@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Card, CardContent } from "./ui/card";
-import EditStudents from "./edit-students";
+import { Link } from "@tanstack/react-router";
 
 interface StackedProps {
   index: number;
@@ -62,15 +62,14 @@ export default function DarkMatrix() {
               </div>
             ))}
             {positionArray.length === 0 && (
-              <EditStudents>
-                <button
-                  className="text-teal-600 cursor-pointer"
-                  onClick={() => {}}
-                >
-                  <h4>Tomt var det här</h4>
-                  <p className="text-xs">Tryck för att lägga till studerande</p>
-                </button>
-              </EditStudents>
+              <Link
+                className="text-teal-600 cursor-pointer"
+                to="/"
+                search={{ edit: true }}
+              >
+                <h4>Tomt var det här</h4>
+                <p className="text-xs">Tryck för att lägga till studerande</p>
+              </Link>
             )}
           </CardContent>
         </Card>
@@ -150,7 +149,7 @@ export default function DarkMatrix() {
             })}
             <div className="absolute -bottom-26 left-70 w-0.25 h-[120%] bg-gray-400/30 rotate-45" />
             <div className="absolute bottom-5 right-5">
-              <h2 className="font-semibold text-teal-600">Ambitionsmatris</h2>
+              <h2 className="font-semibold text-teal-600">Ambitionsmatrisen</h2>
               <p className="text-teal-600/70 text-xs">
                 © 2026 Gus Davidson Group
               </p>
