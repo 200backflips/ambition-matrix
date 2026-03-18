@@ -1,5 +1,6 @@
+import DarkMatrix from "#/components/dark-matrix";
 import EditStudents from "#/components/edit-students";
-import Matrix from "#/components/matrix";
+// import Matrix from "#/components/matrix";
 import { Button } from "#/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { MoonIcon, SunIcon, UserCogIcon } from "lucide-react";
@@ -13,10 +14,10 @@ function App() {
   const [theme, setTheme] = useState(isDarkMode ? "dark" : "light");
 
   return (
-    <div className="h-screen flex flex-col px-4 py-8 bg-linear-to-r from-yellow-300 via-yellow-200 to-yellow-300">
-      <header className="relative w-full flex justify-center items-center gap-2 mb-4">
-        <h1 className="text-teal-900 text-center">Ambitionsmatris</h1>
-        <div className="absolute right-0 top-0 flex items-center gap-2">
+    // <div className="h-screen flex flex-col px-4 py-8 bg-linear-to-r from-yellow-300 via-yellow-200 to-yellow-300">
+    <div className="h-screen flex flex-col px-4 py-8 bg-secondary">
+      <header className="w-full flex justify-end items-center gap-2 mb-4">
+        <div className="flex items-center gap-2">
           <EditStudents>
             <Button variant="aluna">
               Redigera
@@ -39,7 +40,7 @@ function App() {
           </Button>
         </div>
       </header>
-      <Matrix />
+      <DarkMatrix />
     </div>
   );
 }

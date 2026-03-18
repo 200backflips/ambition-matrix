@@ -48,10 +48,12 @@ const useStudents = create<StudentStore>((set) => ({
         return { studentsPositions };
       }
 
-      studentsPositions.set(
-        score,
-        position?.filter((student) => student.id !== id),
-      );
+      const filteredPosition = position?.filter((student) => student.id !== id);
+      if (filteredPosition?.length === 0) {
+        studentsPositions.delete(score);
+      } else {
+        studentsPositions.set(score, filteredPosition);
+      }
 
       localStorage.setItem(
         "studentsPositions",
