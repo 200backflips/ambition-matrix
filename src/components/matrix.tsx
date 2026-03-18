@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import useStudents from "#/hooks/students";
-// import { Badge } from "./ui/badge";
 import { cn } from "#/lib/utils";
 import {
   Tooltip,
@@ -64,25 +63,23 @@ export default function Matrix() {
                       animate="stacked"
                       whileHover={students.length > 1 ? "spread" : "stacked"}
                     >
-                      {students
-                        // .sort((a, b) => a.name.length - b.name.length)
-                        .map((student, index) => (
-                          <motion.div
-                            key={student.id}
-                            custom={index}
-                            variants={animationVariants}
-                            transition={{ type: "tween", duration: 0.2 }}
-                            className={cn(
-                              "size-8 flex items-center justify-center bg-teal-600 border border-teal-700 text-white rounded-full",
-                              {
-                                absolute: index > 0,
-                              },
-                            )}
-                          >
-                            {student.name[0]?.toUpperCase()}
-                            {/* <Badge variant="aluna">{student.name}</Badge> */}
-                          </motion.div>
-                        ))}
+                      {students.map((student, index) => (
+                        <motion.div
+                          key={student.id}
+                          custom={index}
+                          variants={animationVariants}
+                          transition={{ type: "tween", duration: 0.2 }}
+                          className={cn(
+                            "size-8 flex items-center justify-center bg-teal-600 border border-secondary text-white rounded-full",
+                            {
+                              absolute: index > 0,
+                            },
+                          )}
+                        >
+                          {student.name[0]?.toUpperCase()}
+                          {/* <Badge variant="aluna">{student.name}</Badge> */}
+                        </motion.div>
+                      ))}
                     </motion.div>
                   </TooltipTrigger>
                   <TooltipContent>
