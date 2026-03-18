@@ -16,6 +16,9 @@ const config = defineConfig({
     viteReact(),
   ],
   base: "/ambition-matrix/",
+  build: {
+    outDir: "dist",
+  },
 });
 
 export default config;
