@@ -1,5 +1,6 @@
 {
   "name": "ambition-matrix",
+  "homepage": "https://200backflips.github.io/ambition-matrix",
   "private": true,
   "type": "module",
   "imports": {
@@ -9,7 +10,9 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
@@ -46,6 +49,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.1.4",
+    "gh-pages": "^6.3.0",
     "jsdom": "^28.1.0",
     "typescript": "^5.7.2",
     "vite": "^7.3.1",
