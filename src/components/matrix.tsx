@@ -6,6 +6,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Card, CardContent } from "./ui/card";
+import EditStudents from "./edit-students";
 
 interface StackedProps {
   index: number;
@@ -33,23 +35,73 @@ const animationVariants = {
   }),
 };
 
-export default function Matrix() {
+const markerClasses = "absolute -m-2 px-1 bg-secondary text-primary";
+
+export default function DarkMatrix() {
   const { studentsPositions } = useStudents();
+  const positionArray = Array.from(studentsPositions);
 
   return (
-    <div className="flex flex-col gap-2">
-      <h4 className="flex-1 text-teal-900 text-center">
-        Jagar kunskap och växer ständigt
-      </h4>
-      <div className="flex items-center gap-2">
-        <h4 className="flex-1 text-teal-900 text-right">Vad då "variabel"??</h4>
+    <div className="flex flex-col gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <Card>
+          <CardContent>
+            {positionArray.map(([key, students], index) => (
+              <div
+                key={index}
+                className={cn("text-teal-600", {
+                  "mb-3": index < positionArray.length - 1,
+                })}
+              >
+                <h4 className="font-semibold">{key}</h4>
+                {students.map((student) => (
+                  <p key={crypto.randomUUID()} className="ml-2">
+                    {student.name}
+                  </p>
+                ))}
+              </div>
+            ))}
+            {positionArray.length === 0 && (
+              <EditStudents>
+                <button
+                  className="text-teal-600 cursor-pointer"
+                  onClick={() => {}}
+                >
+                  <h4>Tomt var det här</h4>
+                  <p className="text-xs">Tryck för att lägga till studerande</p>
+                </button>
+              </EditStudents>
+            )}
+          </CardContent>
+        </Card>
         <main className="flex items-center justify-center hsp">
-          <section className="relative grid grid-cols-[repeat(10,4rem)] grid-rows-[repeat(10,4rem)] gap-2">
-            <div className="absolute w-0.25 h-full border-l border-dashed border-teal-900/50 left-[50%]" />
-            <div className="absolute w-full h-0.25 border-b border-dashed border-teal-900/50 bottom-[50%]" />
-            {Array.from(studentsPositions).map(([key, students]) => {
+          <section className="relative grid grid-cols-[repeat(10,3.6rem)] grid-rows-[repeat(10,3.6rem)] gap-2 border-l border-b border-gray-400">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <h4 className={cn(markerClasses, "top-0 left-0")}>10</h4>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Jagar kunskap och växer ständigt</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <h4 className={cn(markerClasses, "bottom-0 left-0")}>1</h4>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Vad då "variabel"?? / Kollar hellre på reels</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <h4 className={cn(markerClasses, "bottom-0 right-0")}>10</h4>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Imponerande kunskapsnivå</p>
+              </TooltipContent>
+            </Tooltip>
+            {positionArray.map(([key, students]) => {
               const [ambition, knowledge] = key.split("-").map(Number);
-
               return (
                 <Tooltip key={key}>
                   <TooltipTrigger asChild>
@@ -77,13 +129,13 @@ export default function Matrix() {
                           )}
                         >
                           {student.name[0]?.toUpperCase()}
-                          {/* <Badge variant="aluna">{student.name}</Badge> */}
                         </motion.div>
                       ))}
                     </motion.div>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>
+                      {key}{" "}
                       {students
                         .map(
                           (student, index) =>
@@ -96,13 +148,16 @@ export default function Matrix() {
                 </Tooltip>
               );
             })}
+            <div className="absolute -bottom-26 left-70 w-0.25 h-[120%] bg-gray-400/30 rotate-45" />
+            <div className="absolute bottom-5 right-5">
+              <h2 className="font-semibold text-teal-600">Ambitionsmatris</h2>
+              <p className="text-teal-600/70 text-xs">
+                © 2026 Gus Davidson Group
+              </p>
+            </div>
           </section>
         </main>
-        <h4 className="flex-1 text-teal-900">Imponerande kunskapsnivå</h4>
       </div>
-      <h4 className="flex-1 text-teal-900 text-center">
-        Kollar hellre på reels
-      </h4>
     </div>
   );
 }
